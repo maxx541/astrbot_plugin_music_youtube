@@ -1,0 +1,30 @@
+cat > metadata.yaml << 'EOF'
+name: astrbot_plugin_music_youtube
+display_name: YouTube音乐点歌插件
+desc: 轻量级YouTube音乐点歌插件，支持CC字幕、AI点歌、歌词显示、用户歌单
+help: 使用"@bot 点歌 <歌名>"搜索并播放。支持"查歌词"、"歌单收藏"等功能
+version: v3.0.0-youtube
+author: Zhalslar (YouTube Edition)
+repo: https://github.com/maxx541/astrbot_plugin_music_youtube
+display_name_i18n:
+  en: YouTube Music Song Request Plugin
+  zh_CN: YouTube音乐点歌插件
+  zh_TW: YouTube音樂點歌插件
+desc_i18n:
+  en: Lightweight YouTube music song request plugin with CC subtitles and LLM support
+  zh_CN: 轻量级YouTube音乐点歌插件，支持CC字幕、AI点歌、歌词显示、用户歌单
+  zh_TW: 輕量級YouTube音樂點歌插件，支持CC字幕、AI點歌、歌詞顯示、用戶歌單
+support_platforms:
+  - qq_official
+  - aiocqhttp
+  - telegram
+  - discord
+  - weixin_oc
+  - lark
+  - dingtalk
+  - satori
+  - kook
+astrbot_version: ">=3.4.0,<5.0.0"
+homepage: https://github.com/maxx541/astrbot_plugin_music_youtube
+license: MIT
+EOF
