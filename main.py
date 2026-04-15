@@ -1,5 +1,5 @@
 """YouTube Music Song Request Plugin for AstrBot"""
-
+from typing import Annotated
 import asyncio
 import traceback
 
@@ -176,7 +176,7 @@ class MusicPlugin(Star):
     async def play_song_by_name(
         self,
         event: AstrMessageEvent,
-        song_name: str
+        song_name: Annotated[str, "歌曲名稱"]
     ) -> str:
         """
         Auto play song by name when user requests music.
