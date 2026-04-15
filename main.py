@@ -182,18 +182,18 @@ class MusicPlugin(Star):
             song_name: Song name or artist name to search
         
         Returns:
-            Error message if song not found
+            str: The status of the playback or an error message.
         """
         player = self.get_player(default=True)
         if not player:
-            return "无可用播放器"
+            return "無可用播放器"
         
         try:
             logger.debug(f"Searching for: {song_name}")
             songs = await player.fetch_songs(keyword=song_name, limit=1)
             
             if not songs:
-                return f"没找到'{song_name}'"
+                return f"沒找到 '{song_name}' 的相關歌曲"
             
             song = songs[0]
             await self.sender.send_song(event, player, song)
@@ -201,7 +201,7 @@ class MusicPlugin(Star):
             
         except Exception as e:
             logger.error(f"Play song error: {e}")
-            return "播放失败，请稍后重试"
+            return "播放失敗，請稍後重試"
             
     @filter.command("歌单收藏")
     async def collect_song(self, event: AstrMessageEvent, song_name: str):
