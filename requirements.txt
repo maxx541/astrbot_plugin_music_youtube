@@ -1,0 +1,10 @@
+cat > requirements.txt << 'EOF'
+# Core dependencies
+aiofiles>=23.2.0
+aiohttp>=3.9.0
+Pillow>=10.0.0
+
+# YouTube support
+youtube-search-python>=1.6.6
+yt-dlp>=2023.12.30
+EOF
