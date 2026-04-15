@@ -172,8 +172,7 @@ class MusicPlugin(Star):
             return
         await self.sender.send_lyrics(event, player, songs[0])
 
-    @filter.llm_tool()
-    @filter.llm_tool(args={"song_name": "str"})
+       @filter.llm_tool()
     async def play_song_by_name(
         self, 
         event: AstrMessageEvent, 
@@ -206,7 +205,7 @@ class MusicPlugin(Star):
         except Exception as e:
             logger.error(f"Play song error: {e}")
             return "播放失败，请稍后重试"
-
+            
     @filter.command("歌单收藏")
     async def collect_song(self, event: AstrMessageEvent, song_name: str):
         """Add song to user's personal playlist"""
