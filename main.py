@@ -2,6 +2,7 @@
 from typing import Annotated
 import asyncio
 import traceback
+from astrbot.api.event import AstrMessageEvent, filter
 
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, filter
@@ -173,39 +174,26 @@ class MusicPlugin(Star):
         await self.sender.send_lyrics(event, player, songs[0])
 
     @filter.llm_tool()
-    async def play_song_by_name(
-        self,
-        event: AstrMessageEvent,
-        song_name: Annotated[str, "歌曲名稱"]
-    ) -> str:
+    async def play_song_by_name(self, event: AstrMessageEvent, song_name: str) -> str:
         """
         Auto play song by name when user requests music.
-        LLM tool for automatic song playback from YouTube.
-
-        Args:
-            song_name: Song name or artist name to search
         
-        Returns:
-            str: The status of the playback or an error message.
+        Args:
+            song_name (str): The name of the song or artist.
         """
         player = self.get_player(default=True)
         if not player:
             return "無可用播放器"
-
         try:
-            logger.debug(f"Searching for: {song_name}")
             songs = await player.fetch_songs(keyword=song_name, limit=1)
-
             if not songs:
-                return f"沒找到 '{song_name}' 的相關歌曲"
-
+                return f"沒找到 '{song_name}'"
             song = songs[0]
             await self.sender.send_song(event, player, song)
             return f"正在播放: {song.name} - {song.artists}"
-
         except Exception as e:
             logger.error(f"Play song error: {e}")
-            return "播放失敗，請稍後重試"
+            return "播放失敗"
             
     @filter.command("歌单收藏")
     async def collect_song(self, event: AstrMessageEvent, song_name: str):
