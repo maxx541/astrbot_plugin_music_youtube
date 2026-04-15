@@ -173,19 +173,12 @@ class MusicPlugin(Star):
         await self.sender.send_lyrics(event, player, songs[0])
 
     @filter.llm_tool()
-    async def play_song_by_name(
-        self, 
-        event: AstrMessageEvent, 
-        song_name: str
-    ) -> str:
+    async def play_song_by_name(self, event: AstrMessageEvent, song_name: str) -> str:
         """
-        Auto play song by name when user requests music.
+        当用户想听歌时，根据歌名搜索并播放音乐。
         
-        Args:
-            song_name: Song name or artist name to search
-        
-        Returns:
-            Status message
+        :param song_name: 歌曲名称或歌手名字
+        :return: 播放状态或错误信息
         """
         player = self.get_player(default=True)
         if not player:
@@ -196,7 +189,7 @@ class MusicPlugin(Star):
             songs = await player.fetch_songs(keyword=song_name, limit=1)
             
             if not songs:
-                return f"没找到关于'{song_name}'的歌曲"
+                return f"没找到'{song_name}'"
             
             song = songs[0]
             await self.sender.send_song(event, player, song)
