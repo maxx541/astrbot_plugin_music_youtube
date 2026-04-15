@@ -172,7 +172,7 @@ class MusicPlugin(Star):
             return
         await self.sender.send_lyrics(event, player, songs[0])
 
-       @filter.llm_tool()
+    @filter.llm_tool()
     async def play_song_by_name(
         self, 
         event: AstrMessageEvent, 
