@@ -1,3 +1,5 @@
+"""YouTube Music Song Request Plugin for AstrBot"""
+
 import asyncio
 import traceback
 
@@ -170,21 +172,21 @@ class MusicPlugin(Star):
             return
         await self.sender.send_lyrics(event, player, songs[0])
 
-@filter.llm_tool()
-async def play_song_by_name(
-    self, 
-    event: AstrMessageEvent, 
-    song_name: str
-) -> str:
-    """Auto play song by name when user requests music."""
-    player = self.get_player(default=True)
-    if not player:
-        return "无可用播放器"
-    songs = await player.fetch_songs(keyword=song_name, limit=1)
-    if not songs:
-        return "没找到相关歌曲"
-    await self.sender.send_song(event, player, songs[0])
-    return "正在播放"
+    @filter.llm_tool()
+    async def play_song_by_name(
+        self, 
+        event: AstrMessageEvent, 
+        song_name: str
+    ) -> str:
+        """Auto play song by name when user requests music."""
+        player = self.get_player(default=True)
+        if not player:
+            return "无可用播放器"
+        songs = await player.fetch_songs(keyword=song_name, limit=1)
+        if not songs:
+            return "没找到相关歌曲"
+        await self.sender.send_song(event, player, songs[0])
+        return "正在播放"
 
     @filter.command("歌单收藏")
     async def collect_song(self, event: AstrMessageEvent, song_name: str):
@@ -301,4 +303,3 @@ async def play_song_by_name(
 
         # Send song
         await self.sender.send_song(event, player, song)
-EOF
