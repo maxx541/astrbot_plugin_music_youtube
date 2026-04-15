@@ -172,12 +172,16 @@ class MusicPlugin(Star):
             return
         await self.sender.send_lyrics(event, player, songs[0])
 
-    @filter.llm_tool()
-    async def play_song_by_name(self, event: AstrMessageEvent, song_name: str) -> str:
+   @filter.llm_tool()
+    async def play_song_by_name(
+        self,
+        event: AstrMessageEvent,
+        song_name: str
+    ) -> str:
         """
         Auto play song by name when user requests music.
         LLM tool for automatic song playback from YouTube.
-        
+
         Args:
             song_name: Song name or artist name to search
         
@@ -187,18 +191,18 @@ class MusicPlugin(Star):
         player = self.get_player(default=True)
         if not player:
             return "無可用播放器"
-        
+
         try:
             logger.debug(f"Searching for: {song_name}")
             songs = await player.fetch_songs(keyword=song_name, limit=1)
-            
+
             if not songs:
                 return f"沒找到 '{song_name}' 的相關歌曲"
-            
+
             song = songs[0]
             await self.sender.send_song(event, player, song)
             return f"正在播放: {song.name} - {song.artists}"
-            
+
         except Exception as e:
             logger.error(f"Play song error: {e}")
             return "播放失敗，請稍後重試"
